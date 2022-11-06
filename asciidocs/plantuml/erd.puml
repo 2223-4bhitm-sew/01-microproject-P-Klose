@@ -1,0 +1,13 @@
+@startuml
+
+class Buss
+class Route
+class Station
+
+Buss "*" -- "*" Route
+Route "*" -- "*" Station
+Station -- Station
+(Buss,Route) .. Allocation
+(Route,Station) .. Timetable
+
+@enduml
