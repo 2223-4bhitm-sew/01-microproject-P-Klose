@@ -50,7 +50,7 @@ public class BussResource {
     public List<Buss> findById(
             @QueryParam("first") String fuelType
     ) {
-        logger.info(fuelType);
+        //logger.info(fuelType);
         return bussRepository.findByFuelType(
                 fuelType
         );
@@ -69,6 +69,37 @@ public class BussResource {
                 .path(saved.getId().toString())
                 .build();
         return Response.created(location).build();
+    }
+
+    @PATCH
+    @Transactional
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response update(
+            @PathParam("id") long id,
+            Buss buss,
+            @Context UriInfo uriInfo
+    ) throws Exception {
+        buss.setId(id);
+        Buss saved = bussRepository.save(buss);
+        logger.info("Wird geändert");
+        URI location = uriInfo
+                .getAbsolutePathBuilder()
+                .path(saved.getId().toString())
+                .build();
+        return Response.created(location).build();
+    }
+
+    @DELETE
+    @Transactional
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteById(
+            @PathParam("id") long id
+    ) {
+        //logger.info(id);
+        bussRepository.delete(findById(id));
+        return Response.noContent().build();
     }
 
 

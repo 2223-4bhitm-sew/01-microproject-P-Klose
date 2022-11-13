@@ -30,6 +30,10 @@ public class BussRepository {
         return em.find(Buss.class, id);
     }
 
+    public void delete(Buss buss) {
+        em.remove(buss);
+    }
+
     public List<Buss> findByFuelType(
             String fuelType
     ) {
