@@ -1,0 +1,43 @@
+GET http://localhost:8080/api/buss
+
+###
+
+GET http://localhost:8080/api/buss/?first=Petrol
+
+###
+
+GET http://localhost:8080/api/buss/2
+
+###
+
+POST http://localhost:8080/api/buss
+Content-Type: application/json
+
+{
+  "numberPlate": "LL001TB",
+  "seatingCapacity": "60",
+  "standingCapacity": "10",
+  "companyName": "Linz Linien",
+  "fuelType": "Petrol"
+}
+
+###
+
+PUT http://localhost:8080/api/buss/1/numberPlate
+Content-Type: text/plain
+
+LL002TB
+
+###
+
+PATCH http://localhost:8080/api/buss/2
+Content-Type: application/json
+
+{
+  "fuelType": "Electric"
+}
+
+###
+
+DELETE http://localhost:8080/api/buss/3
+
