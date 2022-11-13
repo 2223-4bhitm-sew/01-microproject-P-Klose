@@ -87,7 +87,7 @@ public class BussResource {
         Buss buss = findById(id);
         buss.setNumberPlate(numberPlate);
         bussRepository.save(buss);
-        return Response.ok(null).build();
+        return Response.ok(buss).build();
     }
 
     @PUT
@@ -102,7 +102,7 @@ public class BussResource {
         Buss buss = findById(id);
         buss.setSeatingCapacity(seatingCapacity);
         bussRepository.save(buss);
-        return Response.ok(null).build();
+        return Response.ok(buss).build();
     }
 
     @PUT
@@ -117,7 +117,7 @@ public class BussResource {
         Buss buss = findById(id);
         buss.setStandingCapacity(standingCapacity);
         bussRepository.save(buss);
-        return Response.ok(null).build();
+        return Response.ok(buss).build();
     }
 
     @PUT
@@ -132,7 +132,7 @@ public class BussResource {
         Buss buss = findById(id);
         buss.setCompanyName(companyName);
         bussRepository.save(buss);
-        return Response.ok(null).build();
+        return Response.ok(buss).build();
     }
 
     @PUT
@@ -147,7 +147,7 @@ public class BussResource {
         Buss buss = findById(id);
         buss.setFuelType(fuelType);
         bussRepository.save(buss);
-        return Response.ok(null).build();
+        return Response.ok(buss).build();
     }
 
     @PATCH
@@ -181,7 +181,7 @@ public class BussResource {
                 .getAbsolutePathBuilder()
                 .build();
         logger.debug(uriInfo);
-        return Response.created(location).build();
+        return Response.ok(buss).build();
     }
 
     @DELETE
@@ -192,7 +192,10 @@ public class BussResource {
             @PathParam("id") long id
     ) {
         //logger.info(id);
-        bussRepository.delete(findById(id));
+        Buss buss = findById(id);
+        if (buss != null){
+            bussRepository.delete(findById(id));
+        }
         return Response.noContent().build();
     }
 
