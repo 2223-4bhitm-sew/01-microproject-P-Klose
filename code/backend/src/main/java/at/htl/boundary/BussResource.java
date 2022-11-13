@@ -60,7 +60,10 @@ public class BussResource {
     @POST
     @Transactional
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response create(Buss buss, @Context UriInfo uriInfo) throws Exception {
+    public Response create(
+            Buss buss,
+            @Context UriInfo uriInfo
+    ) throws Exception {
         //persons.add(person);
         Buss saved = bussRepository.save(buss);
         logger.info(buss.getNumberPlate() + " wird gespeichert");
@@ -80,13 +83,27 @@ public class BussResource {
             Buss buss,
             @Context UriInfo uriInfo
     ) throws Exception {
+        Buss oldBuss = findById(id);
+        String numberPlate = buss.getNumberPlate() != null ? buss.getNumberPlate() : oldBuss.getNumberPlate();
+        int seatingCapacity = buss.getSeatingCapacity() != 0 ? buss.getSeatingCapacity() : oldBuss.getSeatingCapacity();
+        int standingCapacity = buss.getStandingCapacity() != 0 ? buss.getStandingCapacity() : oldBuss.getStandingCapacity();
+        String companyName = buss.getCompanyName() != null ? buss.getCompanyName() : oldBuss.getCompanyName();
+        String fuelType = buss.getFuelType() != null ? buss.getFuelType() : oldBuss.getFuelType();
+
         buss.setId(id);
-        Buss saved = bussRepository.save(buss);
+        buss.setNumberPlate(numberPlate);
+        buss.setCompanyName(companyName);
+        buss.setFuelType(fuelType);
+        buss.setSeatingCapacity(seatingCapacity);
+        buss.setStandingCapacity(standingCapacity);
+
+        bussRepository.save(buss);
         logger.info("Wird geändert");
+        logger.debug(uriInfo);
         URI location = uriInfo
                 .getAbsolutePathBuilder()
-                .path(saved.getId().toString())
                 .build();
+        logger.debug(uriInfo);
         return Response.created(location).build();
     }
 
