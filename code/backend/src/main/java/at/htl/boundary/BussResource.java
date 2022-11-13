@@ -74,6 +74,82 @@ public class BussResource {
         return Response.created(location).build();
     }
 
+
+    @PUT
+    @Transactional
+    @Path("{id}/numberPlate")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateNumberPlate(
+            String numberPlate,
+            @PathParam("id") long id
+    ) {
+        Buss buss = findById(id);
+        buss.setNumberPlate(numberPlate);
+        bussRepository.save(buss);
+        return Response.ok(null).build();
+    }
+
+    @PUT
+    @Transactional
+    @Path("{id}/seatingCapacity")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateSeatingCapacity(
+            int seatingCapacity,
+            @PathParam("id") long id
+    ) {
+        Buss buss = findById(id);
+        buss.setSeatingCapacity(seatingCapacity);
+        bussRepository.save(buss);
+        return Response.ok(null).build();
+    }
+
+    @PUT
+    @Transactional
+    @Path("{id}/standingCapacity")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateStandingCapacity(
+            int standingCapacity,
+            @PathParam("id") long id
+    ) {
+        Buss buss = findById(id);
+        buss.setStandingCapacity(standingCapacity);
+        bussRepository.save(buss);
+        return Response.ok(null).build();
+    }
+
+    @PUT
+    @Transactional
+    @Path("{id}/companyName")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateCompanyName(
+            String companyName,
+            @PathParam("id") long id
+    ) {
+        Buss buss = findById(id);
+        buss.setCompanyName(companyName);
+        bussRepository.save(buss);
+        return Response.ok(null).build();
+    }
+
+    @PUT
+    @Transactional
+    @Path("{id}/fuelType")
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateFuelType(
+            String fuelType,
+            @PathParam("id") long id
+    ) {
+        Buss buss = findById(id);
+        buss.setFuelType(fuelType);
+        bussRepository.save(buss);
+        return Response.ok(null).build();
+    }
+
     @PATCH
     @Transactional
     @Path("{id}")
@@ -84,6 +160,7 @@ public class BussResource {
             @Context UriInfo uriInfo
     ) throws Exception {
         Buss oldBuss = findById(id);
+
         String numberPlate = buss.getNumberPlate() != null ? buss.getNumberPlate() : oldBuss.getNumberPlate();
         int seatingCapacity = buss.getSeatingCapacity() != 0 ? buss.getSeatingCapacity() : oldBuss.getSeatingCapacity();
         int standingCapacity = buss.getStandingCapacity() != 0 ? buss.getStandingCapacity() : oldBuss.getStandingCapacity();
@@ -98,7 +175,7 @@ public class BussResource {
         buss.setStandingCapacity(standingCapacity);
 
         bussRepository.save(buss);
-        logger.info("Wird geändert");
+        logger.info(buss.getNumberPlate() + " Wird geändert");
         logger.debug(uriInfo);
         URI location = uriInfo
                 .getAbsolutePathBuilder()

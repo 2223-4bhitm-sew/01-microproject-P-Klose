@@ -23,13 +23,19 @@ Content-Type: application/json
 
 ###
 
+PUT http://localhost:8080/api/buss/1/numberPlate
+Content-Type: text/plain
+
+LL002TB
+
+###
+
 PATCH http://localhost:8080/api/buss/2
 Content-Type: application/json
 
 {
   "fuelType": "Electric"
 }
-
 
 ###
 
